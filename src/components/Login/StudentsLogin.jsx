@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { getAll, putOne } from '../../API/Reguests';
+import Swal from 'sweetalert2';
 
 function Copyright(props) {
   return (
@@ -31,7 +33,8 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function StudentsSignIn() {
-
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -59,6 +62,8 @@ export default function StudentsSignIn() {
               id="email"
               label="Email Address"
               name="email"
+              value={email}
+              onChange={(e) => { setEmail(e.target.value) }}
               autoComplete="email"
               autoFocus
             />
@@ -69,6 +74,8 @@ export default function StudentsSignIn() {
               name="password"
               label="Password"
               type="password"
+              value={password}
+                            onChange={(e) => { setPassword(e.target.value) }}
               id="password"
               autoComplete="current-password"
             />
@@ -81,6 +88,43 @@ export default function StudentsSignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={(e) => {
+                e.preventDefault()
+                getAll("students").then((res) => {
+
+                    const localUsers = res.data || [];
+                    const check = localUsers.find(
+                        (x) => x.email == email && x.password == password
+                    );
+                    console.log(check);
+                    if (check) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "User Signed In successfully",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => {
+                            check.isLogged = true;
+                            // console.log(check.id);
+                            putOne("students", check.id, check)
+                        }).then(() => {
+                            console.log(getAll("students"));
+                        });
+                        setEmail("")
+                        setPassword("")
+                    }
+                    else{
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "error",
+                            title: "User Signed In Not successfully",
+                            showConfirmButton: false,
+                            timer: 1500,
+                        })
+                    }
+                })
+            }}
             >
               Sign In
             </Button>

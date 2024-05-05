@@ -12,81 +12,113 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Swal from 'sweetalert2';
+import { getAll, putOne } from '../../API/Reguests';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
-// TODO remove, this demo shouldn't need to reset the theme.
+
 
 const defaultTheme = createTheme();
 
 export default function TeachersSignIn() {
+    const [email, setEmail] = React.useState("")
+    const [password, setPassword] = React.useState("")
 
+    return (
+        <ThemeProvider theme={defaultTheme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Teacher Sign in
+                    </Typography>
+                    <Box component="form" noValidate sx={{ mt: 1 }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            value={email}
+                            onChange={(e) => { setEmail(e.target.value) }}
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            value={password}
+                            onChange={(e) => { setPassword(e.target.value) }}
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+                        <FormControlLabel
+                            control={<Checkbox value="remember" color="primary" />}
+                            label="Remember me"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                getAll("teachers").then((res) => {
 
-  return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-           Teacher Sign in
-          </Typography>
-          <Box component="form"  noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-            </Button>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+                                    const localUsers = res.data || [];
+                                    const check = localUsers.find(
+                                        (x) => x.email == email && x.password == password
+                                    );
+                                    console.log(check);
+                                    if (check) {
+                                        Swal.fire({
+                                            position: "top-end",
+                                            icon: "success",
+                                            title: "User Signed In successfully",
+                                            showConfirmButton: false,
+                                            timer: 1500,
+                                        }).then(() => {
+                                            check.isLogged = true;
+                                            // console.log(check.id);
+                                            putOne("teachers", check.id, check)
+                                        }).then(() => {
+                                            console.log(getAll("teachers"));
+                                        });
+                                        setEmail("")
+                                        setPassword("")
+                                    }
+                                    else{
+                                        Swal.fire({
+                                            position: "top-end",
+                                            icon: "error",
+                                            title: "User Signed In Not successfully",
+                                            showConfirmButton: false,
+                                            timer: 1500,
+                                        })
+                                    }
+                                })
+                            }}
+                        >
+                            Sign In
+                        </Button>
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
+    );
 }

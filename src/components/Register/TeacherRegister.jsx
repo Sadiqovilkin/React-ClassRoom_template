@@ -171,7 +171,7 @@ export default function SignUp() {
                                         title: "Hey Teacherss Pls Correct Fill Inputs",
                                         showConfirmButton: false,
                                         timer: 1500
-                                      });
+                                    });
                                 }
                             }}
                         >
