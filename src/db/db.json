@@ -1,5 +1,51 @@
 {
-    "students":[],
-    "teachers":[],
-    "classwork":[]
+  "students": [
+    {
+      "id": "9a29",
+      "fullname": "Sadiqov Ilkin",
+      "username": "Sadiqov860",
+      "email": "sadiqov@gmail.com",
+      "password": "Ilkin1234",
+      "profileImg": "https://static.vecteezy.com/system/resources/previews/007/469/004/non_2x/graduated-student-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg",
+      "grades": [],
+      "isAdmin": false,
+      "isLogged": false
+    },
+    {
+      "id": "d60f",
+      "fullname": "Nurlan Seferli ",
+      "username": "Safarov052",
+      "email": "safarov@gmail.com",
+      "password": "Nurlan1234",
+      "profileImg": "https://static.vecteezy.com/system/resources/previews/007/469/004/non_2x/graduated-student-in-simple-flat-personal-profile-icon-or-symbol-people-concept-illustration-vector.jpg",
+      "grades": [],
+      "isAdmin": false,
+      "isLogged": false
+    }
+  ],
+  "teachers": [
+    {
+      "id": "653c",
+      "fullname": "Elnur Xelilov",
+      "username": "ElnurXo",
+      "email": "ada@gmail.com",
+      "password": "Elnur1234",
+      "profileImg": "https://lh3.googleusercontent.com/proxy/S6duRhNIZevxgvG2EdaZi4XGahlvcG25P4naFqRrMz_jWcEDJMSpPb_zLWNQP2J0p92n1i-IbOzNcBQf8r4brn6oLIcFL-0kEe_0dTeSti3bJqXNFub7tYQBw-QWLRHaxSDeJfyodigsUhgPQqHH7lwlog1CDg",
+      "major": [],
+      "isAdmin": true,
+      "isLogged": false
+    },
+    {
+      "id": "9f57",
+      "fullname": "Gulsen Zalova",
+      "username": " Gulshen",
+      "email": "gulshen@gmail.com",
+      "password": "Gulsen1234",
+      "profileImg": "https://lh3.googleusercontent.com/proxy/YCfUg0TKBgEO2Sj7Qnq68snaE8EgVRXXu63hXJbVdh5lkgfNYfgZiqFY-u2Yl44R43rTE_aFKQmkp3paazHA5WE-gNUCwZuG0VL3IXOVXesUx8DYOCei22IW836uWlViOIALQllCMafSEA5dy-hKczCcrRyB6A",
+      "major": [],
+      "isAdmin": true,
+      "isLogged": false
+    }
+  ],
+  "classwork": []
 }
